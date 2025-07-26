@@ -47,6 +47,7 @@ dependencies {
 
     //Loads the image
     implementation(libs.coil.compose)
+    implementation ("io.coil-kt:coil-gif:2.0.0")
 
     //Network calls
     implementation(libs.retrofit)

@@ -15,12 +15,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -37,8 +35,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import coil.compose.rememberAsyncImagePainter
 import com.vishalpvijayan.composeanimation_hilt.data.sampleData.OnboardingCard
+import com.vishalpvijayan.composeanimation_hilt.presentation.components.ButtonWithGif
 
 
 @Composable
@@ -54,15 +54,15 @@ fun ExpandableOnboardingCard(
 
     val backgroundGradient = Brush.linearGradient(
         colors = listOf(
-            Color(android.graphics.Color.parseColor(card.startGradient)),
-            Color(android.graphics.Color.parseColor(card.endGradient))
+            Color(card.startGradient.toColorInt()),
+            Color(card.endGradient.toColorInt())
         )
     )
 
     val borderGradient = Brush.horizontalGradient(
         colors = listOf(
-            Color(android.graphics.Color.parseColor(card.strokeStartColor)),
-            Color(android.graphics.Color.parseColor(card.strokeEndColor))
+            Color(card.strokeStartColor.toColorInt()),
+            Color(card.strokeEndColor.toColorInt())
         )
     )
 
@@ -71,7 +71,7 @@ fun ExpandableOnboardingCard(
             .fillMaxWidth()
             .animateContentSize()
             .clickable { if (!expanded) onExpand() else onCollapse() }
-            .border(width = 3.dp, brush = borderGradient, shape = shape),
+            .border(width = 1.dp, brush = borderGradient, shape = shape),
         shape = shape,
         elevation = CardDefaults.cardElevation(8.dp),
     ) {
@@ -115,20 +115,10 @@ fun ExpandableOnboardingCard(
                         modifier = Modifier.padding(vertical = 6.dp)
                     )
 
-                    /*Text(
-                        text = card.description,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(8.dp)
-                    )*/
 
                     if (showActionButton) {
                         Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = onActionButtonClick,
-                            modifier = Modifier.wrapContentWidth()
-                        ) {
-                            Text("Save in Gold")
-                        }
+                        ButtonWithGif(onActionButtonClick = onActionButtonClick)
                     }
                 }
             } else {
