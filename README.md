@@ -1,4 +1,4 @@
-# Manual Buy Education App
+# Demo Application
 
 ## About the Project
 
