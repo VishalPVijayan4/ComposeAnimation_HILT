@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 fun SplashScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         delay(2000L) // Wait for 2 seconds
-        navController.navigate("landing") {
+        navController.navigate("onboarding") {
             popUpTo("splash") { inclusive = true } // Remove splash from back stack
         }
     }

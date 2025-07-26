@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.vishalpvijayan.composeanimation_hilt.data.sampleData.getStaticCards
 import com.vishalpvijayan.composeanimation_hilt.presentation.screens.LandingScreen
+import com.vishalpvijayan.composeanimation_hilt.presentation.screens.OnboardingScreen
 import com.vishalpvijayan.composeanimation_hilt.presentation.screens.SplashScreen
 
 @Composable
@@ -21,6 +23,15 @@ fun NavigationInApp() {
         //2. LANDING SCREEN
         composable("landing") {
             LandingScreen(navController)
+        }
+
+        //3. LANDING SCREEN
+        composable("onboarding") {
+            OnboardingScreen(
+                navController = navController,
+                cards = getStaticCards(),
+                onNavigateToLanding = { navController.navigate("landing") }
+            )
         }
 
     }
