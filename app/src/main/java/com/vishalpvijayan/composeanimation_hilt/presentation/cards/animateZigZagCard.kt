@@ -12,8 +12,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import com.vishalpvijayan.composeanimation_hilt.data.sampleData.OnboardingCard
 import kotlinx.coroutines.launch
 
+
+
 @Composable
-fun AnimatedZigZagCard(card: OnboardingCard, expanded: Boolean) {
+fun AnimatedZigZagCard(card: OnboardingCard, expanded: Boolean, onClick: () -> Unit) {
     val offsetX = remember { Animatable(if (card.id % 2 == 0) -300f else 300f) }
     val offsetY = remember { Animatable(300f) }
     val alpha = remember { Animatable(0f) }
@@ -41,7 +43,7 @@ fun AnimatedZigZagCard(card: OnboardingCard, expanded: Boolean) {
         ExpandableOnboardingCard(
             card = card,
             expanded = expanded,
-            onExpand = {},
+            onExpand = onClick,
             onCollapse = {},
             showActionButton = false,
             onActionButtonClick = {}

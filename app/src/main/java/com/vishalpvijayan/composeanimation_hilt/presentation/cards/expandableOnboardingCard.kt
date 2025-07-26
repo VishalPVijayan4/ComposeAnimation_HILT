@@ -1,10 +1,12 @@
 package com.vishalpvijayan.composeanimation_hilt.presentation.cards
 
-import com.vishalpvijayan.composeanimation_hilt.data.sampleData.OnboardingCard
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,11 +30,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import com.vishalpvijayan.composeanimation_hilt.data.sampleData.OnboardingCard
 
 
 @Composable
@@ -44,82 +50,125 @@ fun ExpandableOnboardingCard(
     showActionButton: Boolean,
     onActionButtonClick: () -> Unit
 ) {
+    val shape = RoundedCornerShape(60.dp)
+
+    val backgroundGradient = Brush.linearGradient(
+        colors = listOf(
+            Color(android.graphics.Color.parseColor(card.startGradient)),
+            Color(android.graphics.Color.parseColor(card.endGradient))
+        )
+    )
+
+    val borderGradient = Brush.horizontalGradient(
+        colors = listOf(
+            Color(android.graphics.Color.parseColor(card.strokeStartColor)),
+            Color(android.graphics.Color.parseColor(card.strokeEndColor))
+        )
+    )
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .animateContentSize()
-            .clickable { if (!expanded) onExpand() else onCollapse() },
+            .clickable { if (!expanded) onExpand() else onCollapse() }
+            .border(width = 3.dp, brush = borderGradient, shape = shape),
+        shape = shape,
         elevation = CardDefaults.cardElevation(8.dp),
-        shape = RoundedCornerShape(60.dp)
     ) {
-        if (expanded) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Spacer(modifier = Modifier.height(16.dp))
-                Image(
-                    painter = painterResource(id = card.imageRes),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(180.dp)
-                        .clip(CircleShape)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = card.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(vertical = 6.dp),
-                    textAlign = TextAlign.Center
-                )
-                Text(
-                    text = card.description,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(8.dp)
-                )
-                if (showActionButton) {
+        Box(
+            modifier = Modifier
+                .background(brush = backgroundGradient)
+                .padding(16.dp)
+        ) {
+            if (expanded) {
+                Column(
+                    modifier = Modifier.fillMaxWidth().width(340.dp).height(350.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Spacer(modifier = Modifier.height(16.dp))
-                    Button(
-                        onClick = onActionButtonClick,
+
+                    Image(
+                        painter = rememberAsyncImagePainter(card.imageRes),
+                        contentDescription = null,
                         modifier = Modifier
-                            .wrapContentWidth()
-                    ) {
-                        Text("Save in Gold")
+                            .width(360.dp)
+                            .height(250.dp)
+                            .clip(RoundedCornerShape(
+                                topStart = 16.dp,
+                                topEnd = 16.dp,
+                                bottomStart = 16.dp,
+                                bottomEnd = 16.dp
+                            )),
+                        contentScale = ContentScale.FillHeight
+                    )
+
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = card.expandStateText,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        fontSize = 24.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 6.dp)
+                    )
+
+                    /*Text(
+                        text = card.description,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(8.dp)
+                    )*/
+
+                    if (showActionButton) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(
+                            onClick = onActionButtonClick,
+                            modifier = Modifier.wrapContentWidth()
+                        ) {
+                            Text("Save in Gold")
+                        }
                     }
                 }
-            }
-        } else {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = card.imageRes),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                Text(
-                    card.title,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp,
-                    modifier = Modifier.weight(1f)
-                )
-                IconButton(onClick = onExpand) {
-                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Expand")
+            } else {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Image(
+                        painter = rememberAsyncImagePainter(card.imageRes),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+
+
+                    Text(
+                        text = card.collapsedStateText,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    IconButton(onClick = onExpand) {
+                        Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Expand", tint = Color.LightGray)
+                    }
                 }
             }
         }
     }
 }
+
+
+
+
 
 
