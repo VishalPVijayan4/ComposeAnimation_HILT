@@ -50,7 +50,13 @@ This Android application demonstrates a clean, maintainable, and well-architecte
 - Manage coroutines with proper scopes and cancellation to prevent memory leaks.
 - Monitor and optimize memory and CPU usage during animations and state updates to maintain smooth performance.
 
----
+![WhatsApp Image 2025-07-26 at 10 48 21 PM (1)](https://github.com/user-attachments/assets/d0ab2128-9f32-4693-b81a-01b04e7c68f5)
+
+![WhatsApp Image 2025-07-26 at 10 48 21 PM (2)](https://github.com/user-attachments/assets/4f1f0845-cc2e-4ae2-ab2c-108e3e63c4a9)
+
+![WhatsApp Image 2025-07-26 at 10 48 21 PM](https://github.com/user-attachments/assets/da3292f8-e01f-4695-9593-f6bb822d08bb)
+
+![WhatsApp Image 2025-07-26 at 10 48 22 PM](https://github.com/user-attachments/assets/99ebb501-d9b2-43f1-88bd-8cb7dbb0caee)
 
 This architecture and coding approach ensures a robust, scalable, and maintainable Android application aligned with modern best practices and professional standards.
 
